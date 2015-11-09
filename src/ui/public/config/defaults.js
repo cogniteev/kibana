@@ -99,6 +99,10 @@ define(function () {
         }),
         description: 'Maps values to specified colors within visualizations'
       },
+      'embed:enableFilters': {
+        value: true,
+        description: 'Should filters be enabled in embed mode?'
+      },
       'csv:separator': {
         value: ',',
         description: 'Separate exported values with this string',

@@ -45,7 +45,7 @@ define(function (require) {
     'kibana/notify',
     'kibana/courier'
   ])
-  .controller('VisEditor', function ($scope, $route, timefilter, AppState, $location, kbnUrl, $timeout, courier, Private, Promise) {
+  .controller('VisEditor', function ($scope, $route, timefilter, AppState, $location, kbnUrl, $timeout, courier, Private, Promise, config) {
 
     var angular = require('angular');
     var ConfigTemplate = require('ui/ConfigTemplate');
@@ -117,8 +117,10 @@ define(function (require) {
       $scope.conf = _.pick($scope, 'doSave', 'savedVis', 'shareData');
       $scope.configTemplate = configTemplate;
 
-      editableVis.listeners.click = vis.listeners.click = filterBarClickHandler($state);
-      editableVis.listeners.brush = vis.listeners.brush = brushEvent;
+      if (!$route.current.params.embed || config.get('embed:enableFilters')) {
+        editableVis.listeners.click = vis.listeners.click = filterBarClickHandler($state);
+        editableVis.listeners.brush = vis.listeners.brush = brushEvent;
+      }
 
       // track state of editable vis vs. "actual" vis
       $scope.stageEditableVis = transferVisState(editableVis, vis, true);
