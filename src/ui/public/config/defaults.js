@@ -103,6 +103,10 @@ define(function () {
         value: true,
         description: 'Should filters be enabled in embed mode?'
       },
+      'embed:showTitle': {
+        value: true,
+        description: 'Should the title be displayed in embed mode?'
+      },
       'csv:separator': {
         value: ',',
         description: 'Separate exported values with this string',
