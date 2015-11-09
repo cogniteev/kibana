@@ -78,13 +78,6 @@ define(function (require) {
       share: require('plugins/kibana/visualize/editor/panels/share.html'),
     });
 
-    var configEmbed;
-    if ($route.current.params.embed) {
-      configEmbed = {
-        showTitle: config.get('embed:showTitle')
-      };
-    }
-
     if (savedVis.id) {
       docTitle.change(savedVis.title);
     }
@@ -126,7 +119,7 @@ define(function (require) {
 
       $scope.conf = _.pick($scope, 'doSave', 'savedVis', 'shareData');
       $scope.configTemplate = configTemplate;
-      $scope.configEmbed = configEmbed;
+      $scope.showTitle = !$route.current.params.embed || config.get('embed:showTitle');
 
       editableVis.listeners.click = vis.listeners.click = filterBarClickHandler($state);
       editableVis.listeners.brush = vis.listeners.brush = brushEvent;
