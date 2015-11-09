@@ -116,6 +116,7 @@ define(function (require) {
       $scope.state = $state;
       $scope.conf = _.pick($scope, 'doSave', 'savedVis', 'shareData');
       $scope.configTemplate = configTemplate;
+      $scope.showTitle = !$route.current.params.embed || config.get('embed:showTitle');
 
       if (!$route.current.params.embed || config.get('embed:enableFilters')) {
         editableVis.listeners.click = vis.listeners.click = filterBarClickHandler($state);
