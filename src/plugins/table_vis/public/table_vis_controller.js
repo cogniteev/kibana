@@ -5,7 +5,7 @@ define(function (require) {
 
   // add a controller to tha module, which will transform the esResponse into a
   // tabular format that we can pass to the table directive
-  module.controller('KbnTableVisController', function ($scope, Private) {
+  module.controller('KbnTableVisController', function ($route, $scope, Private, config) {
     var tabifyAggResponse = Private(require('ui/agg_response/tabify/tabify'));
 
     $scope.$watch('esResponse', function (resp, oldResp) {
@@ -19,7 +19,7 @@ define(function (require) {
         tableGroups = tabifyAggResponse(vis, resp, {
           partialRows: params.showPartialRows,
           minimalColumns: vis.isHierarchical() && !params.showMeticsAtAllLevels,
-          asAggConfigResults: true
+          asAggConfigResults: !$route.current.params.embed || config.get('embed:enableFilters')
         });
 
         hasSomeRows = tableGroups.tables.some(function haveRows(table) {

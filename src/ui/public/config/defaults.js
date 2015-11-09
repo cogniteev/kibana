@@ -117,6 +117,10 @@ define(function (require) {
         value: '2s',
         description: 'Time to wait before dimming visualizations during query'
       },
+      'embed:enableFilters': {
+        value: true,
+        description: 'Should filters be enabled in embed mode?'
+      },
       'csv:separator': {
         value: ',',
         description: 'Separate exported values with this string',
