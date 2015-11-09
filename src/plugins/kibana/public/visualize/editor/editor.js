@@ -45,7 +45,7 @@ define(function (require) {
     'kibana/notify',
     'kibana/courier'
   ])
-  .controller('VisEditor', function ($scope, $route, timefilter, AppState, $location, kbnUrl, $timeout, courier, Private, Promise) {
+  .controller('VisEditor', function ($scope, $route, timefilter, AppState, $location, kbnUrl, $timeout, courier, Private, Promise, config) {
 
     var angular = require('angular');
     var ConfigTemplate = require('ui/ConfigTemplate');
@@ -77,6 +77,13 @@ define(function (require) {
       load: require('plugins/kibana/visualize/editor/panels/load.html'),
       share: require('plugins/kibana/visualize/editor/panels/share.html'),
     });
+
+    var configEmbed;
+    if ($route.current.params.embed) {
+      configEmbed = {
+        showTitle: config.get('embed:showTitle')
+      };
+    }
 
     if (savedVis.id) {
       docTitle.change(savedVis.title);
@@ -119,6 +126,7 @@ define(function (require) {
 
       $scope.conf = _.pick($scope, 'doSave', 'savedVis', 'shareData');
       $scope.configTemplate = configTemplate;
+      $scope.configEmbed = configEmbed;
 
       editableVis.listeners.click = vis.listeners.click = filterBarClickHandler($state);
       editableVis.listeners.brush = vis.listeners.brush = brushEvent;
