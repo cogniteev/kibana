@@ -36,6 +36,8 @@ define(function (require) {
         'defaultOpacity' : 1,
         'legendDefaultOpacity': 1
       });
+
+      this._isClickActive = _.contains(vis.activeEvents(), 'click');
     }
 
     Legend.prototype._getPieLabels = function (data) {
@@ -167,7 +169,7 @@ define(function (require) {
           return pointLabel !== label.toString();
         }
 
-        if (label && label !== 'Count') {
+        if (self._isClickActive && label && label !== 'Count') {
           d3.select(this).style('cursor', 'pointer');
         }
 
@@ -206,12 +208,14 @@ define(function (require) {
         eventEl.style('word-break', 'inherit');
       });
 
-      legendDiv.selectAll('li.color').each(function (d) {
-        var label = d.label;
-        if (label !== undefined && label !== 'Count') {
-          d3.select(this).call(self.events.addClickEvent());
-        }
-      });
+      if (this._isClickActive) {
+        legendDiv.selectAll('li.color').each(function (d) {
+          var label = d.label;
+          if (label !== undefined && label !== 'Count') {
+            d3.select(this).call(self.events.addClickEvent());
+          }
+        });
+      }
     };
 
     return Legend;
