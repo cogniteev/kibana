@@ -1,7 +1,0 @@
-build
-target
-node_modules
-docs
-.node_binaries
-.dockerignore
-
