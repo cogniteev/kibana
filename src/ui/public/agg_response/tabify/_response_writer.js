@@ -47,6 +47,9 @@ define(function (require) {
       // to their aggConfig and enable the filterbar and tooltip formatters
       this.asAggConfigResults = !!this.opts.asAggConfigResults;
 
+      // if true, enable filters and filterbar
+      this.enableFilters = !!this.opts.enableFilters;
+
       this.columns = getColumns(vis, this.minimalColumns);
       this.aggStack = _.pluck(this.columns, 'aggConfig');
 
@@ -210,7 +213,7 @@ define(function (require) {
      */
     TabbedAggResponseWriter.prototype.cell = function (agg, value, block) {
       if (this.asAggConfigResults) {
-        value = new AggConfigResult(agg, this.acrStack[0], value, value);
+        value = new AggConfigResult(agg, this.acrStack[0], value, value, this.enableFilters);
       }
 
       var staskResult = this.asAggConfigResults && value.type === 'bucket';

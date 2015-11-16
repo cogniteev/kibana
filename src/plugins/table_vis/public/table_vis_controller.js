@@ -19,7 +19,8 @@ define(function (require) {
         tableGroups = tabifyAggResponse(vis, resp, {
           partialRows: params.showPartialRows,
           minimalColumns: vis.isHierarchical() && !params.showMeticsAtAllLevels,
-          asAggConfigResults: !$route.current.params.embed || config.get('embed:enableFilters')
+          asAggConfigResults: true,
+          enableFilters: !$route.current.params.embed || config.get('embed:enableFilters')
         });
 
         hasSomeRows = tableGroups.tables.some(function haveRows(table) {

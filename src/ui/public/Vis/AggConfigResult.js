@@ -1,12 +1,13 @@
 define(function () {
   var i = 0;
 
-  function AggConfigResult(aggConfig, parent, value, key) {
+  function AggConfigResult(aggConfig, parent, value, key, enableFilters) {
     this.key = key;
     this.value = value;
     this.aggConfig = aggConfig;
     this.$parent = parent;
     this.$order = ++i;
+    this.enableFilters = enableFilters === undefined ? true : enableFilters;
 
     if (aggConfig.schema.group === 'buckets') {
       this.type = 'bucket';
@@ -25,6 +26,10 @@ define(function () {
       if (result.$parent) return walk(result.$parent, path);
       return path;
     }(this, []));
+  };
+
+  AggConfigResult.prototype.isFilterEnabled = function () {
+    return this.enableFilters && this.type === 'bucket' && this.aggConfig.field() && this.aggConfig.field().filterable;
   };
 
   /**
